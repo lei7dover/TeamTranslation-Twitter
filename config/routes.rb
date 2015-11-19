@@ -1,9 +1,19 @@
 Rails.application.routes.draw do
+  resources :relationships
+  resources :rants
+  get 'sessions/new'
+  post 'sessions/create'
+  delete 'sessions/destroy'
+
+  resources :after_signup
+  resources :users
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  # root 'welcome#index'
+    root 'rants#index'
+
+    get 'friends', to: 'users#friends', as:'friends'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

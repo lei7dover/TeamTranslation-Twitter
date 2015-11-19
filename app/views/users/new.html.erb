@@ -1,0 +1,23 @@
+<div class="panel right">
+  <h1>New to Rage Rant?</h1>
+
+  <%= bootstrap_form_for @user do |f| %>
+    <% if @user.errors.any? %>
+      <ul>
+        <% @user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    <% end %>
+
+
+    <%= f.text_field :name, placeholder: "Your Name" %>
+    <%= f.text_field :email, placeholder: "Email" %>
+    <%= f.text_field :username, placeholder: "Username" %>
+    <%= f.password_field :password, placeholder: "Password" %>
+    <%= f.password_field :password_confirmation, placeholder: "Confirm Password" %>
+    <br>
+    <%= f.submit "Create Account" %>
+  <% end %>
+<br>
+</div>

@@ -1,0 +1,49 @@
+<% if current_user %>
+  <div class="panel left">
+    <h1>Rant your Rage</h1>
+      <%= bootstrap_form_for @rant, remote: true do |f|%>
+    <div class="control-group">
+      <%= f.text_area :content, skip_label:true, :size => "100x5", :placeholder => "Rant away..." %>
+      <%= f.submit "Rant!", method: :post %>
+    </div>
+      <% end %>
+  </div>
+<% end %>
+<div>
+  <%= link_to "Public Rants", rants_path %>
+  <%= link_to "My Profile", current_user %>
+</div>
+<div class = "row">
+  <div class="panel_left col-xs-12 col-md-8">
+    <br>
+    <h4>Recent Rants</h4>
+    <% @rants.each do |rant| %>
+      <br>
+      <p><a href="<%= user_path rant.user %>"><%= rant.user.name %></a> @ <%=rant.user.username%>   Posted <%= time_ago_in_words(rant.created_at) %> ago</p>
+      <p><%= rant.content %></p>
+      <p><%= rant.user.followers.count %> Followers  <%= rant.user.followeds.count %> Following</p><br>
+        <% if current_user && @user != current_user %>
+          <% if current_user.following? @user %>
+            <%= form_tag relationship_path(current_user.relate(@user)), method: :delete do %>
+              <%= submit_tag "Unfollow" %>
+              <% end %>
+            <% else %>
+            <%= form_for @relationship do %>
+              <%= hidden_field_tag :followed_id, @user.id %>
+              <%= submit_tag "Follow" %>
+              <% end %>
+            <% end %>
+        <% end %>
+      <% end %>
+      <br>
+  </div>
+
+    <div class = "panel_right col-xs-12 col-md-4">
+      <h4>Profile Info</h4>
+      <p><%= current_user.rants.size %> Rants</p>
+      <p><%= current_user.followers.count %> Followers</p>
+      <p><%= current_user.followeds.count %> Following</p><br>
+    </div>
+</div>
+
+<%= paginate @rants %>

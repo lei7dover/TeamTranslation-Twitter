@@ -10,6 +10,44 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- *= require_tree .
- *= require_self
+
  */
+ @import "bootstrap-sprockets";
+ @import "bootstrap";
+
+
+ *{
+   font-family: Verdana;
+ }
+
+ .jumbotron {
+    background-image:url(image_path('yelling.jpg'));
+    background-size: 120% 120%;
+    height: 80vh;
+    text-align: right;
+    position:relative;
+    padding: 10px;
+ }
+
+ .jumbotron #title{
+   font-size: 75px;
+   color: white;
+   position: absolute;
+   font-style: oblique;
+ }
+
+ .posts {
+   padding-left:50px;
+   text-align: left;
+ }
+ #header{
+   text-align:center;
+ }
+
+ .panel_left{
+
+ }
+
+ .panel_right{
+
+ }

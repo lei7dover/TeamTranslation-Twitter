@@ -1,0 +1,60 @@
+<% if current_user %>
+  <div class="panel right">
+    <h1>Rant your Rage</h1>
+    <p>
+    <%= bootstrap_form_for @rant do |f|%>
+      <%= f.text_area :content,skip_label:true, :size=> "100x5", :placeholder => "Rant away..."%><br>
+      <%= f.submit "Rant!" %>
+      <% end %>
+    </p>
+  </div>
+<% end %>
+
+<h1><%=@user.name%>'s Rage Page</h1>
+<div class="row">
+  <div class="panel_left col-xs-12 col-md-8">
+    <br>
+    <h4>Your Rants</h4>
+    <% @rants.each do |rant| %>
+      <br>
+      <p><a href="<%= user_path rant.user %>"><%= rant.user.name %></a> @ <%=rant.user.username%>   Posted <%= time_ago_in_words(rant.created_at) %> ago</p>
+      <p><%= rant.content %></p>
+      <p><%= rant.user.follower_relationships.count %> Followers  <%= rant.user.followed_relationships.count %> Following</p><br>
+      <div class = 'follow_button'>
+        <% if current_user && @user != current_user %>
+          <% if current_user.following? @user %>
+            <%= form_tag relationship_path(current_user.relate(@user)), method: :delete, remote: true do %>
+              <%= submit_tag "Unfollow" %>
+              <% end %>
+            <% else %>
+            <%= form_for @relationship, remote: true do %>
+              <%= hidden_field_tag :followed_id, @user.id %>
+              <%= submit_tag "Follow" %>
+              <% end %>
+            <% end %>
+        <% end %>
+      </div>
+      <% end %>
+      <br>
+  </div>
+  <div class="panel_right col-xs-12 col-md-4">
+    <h3>Profile Info</h3>
+      <p><%=@user.name %> has made <%= @user.rants.size %> rants</p>
+      <p><%= @user.followers.count %> Followers <%= @user.followeds.count %> Following</p>
+        <% if @user.rants.any? %>
+          <p><%= @user.name %>'s first rant: <%= @user.rants.first.content %></p>
+          <%else%>
+        <%end%>
+      <br>
+      <br>
+    <h3>Followers </h3>
+  <% @user.followers.each do |u|%>
+      <p><%=link_to u.name, user_path(u) %></p>
+      <% end %>
+    <h3>Following</h3>
+  <% @user.followeds.each do |u|%>
+    <p> <%= link_to u.name, user_path(u) %></p>
+    <% end %>
+  </div><br>
+</div>
+<%= paginate @rants %>

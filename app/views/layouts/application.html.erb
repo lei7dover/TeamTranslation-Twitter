@@ -7,8 +7,41 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
-<%= yield %>
-
-</body>
-</html>
+  <body>
+      <header>
+        <div class = "container-fluid">
+          <div class = "jumbotron">
+          <p id= "title"> RAGE RANT</p>
+          <div class = "row col-xs-12">
+            <% if @current_user%>
+              <h5>Welcome, <%=link_to @current_user.name, user_path(@current_user)%> !</h5>
+              <%= link_to "Home", root_url, :class => "btn btn-medium btn-primary" %>
+              <%= link_to "Log out",  sessions_destroy_path(@current_user),method: :delete, :class => "btn btn-medium btn-primary" %>
+            <%else%>
+              <%= form_tag sessions_create_path do %>
+                <%= text_field_tag "session[username]", nil, placeholder: "username" %>
+                <%= password_field_tag "session[password]", nil,  placeholder: "password" %>
+                <%= submit_tag "Log In"%>
+                <%end%>
+                <%= link_to "Sign Up for an Account", new_user_path, :class => "btn btn-medium btn-primary" %>
+            <%end%>
+          </div>
+        </div>
+      </div>
+      </header>
+      <div>
+          <div class= "posts">
+              <% flash.each do |name, msg| %>
+                  <%= content_tag :div, msg, class: "flash #{name}" %>
+              <% end %>
+              <%= yield %>
+          </div>
+      </div>
+      <footer>
+        <br>
+          <div>
+              Rage Rant - Tell us how you really feel!
+          </div>
+      </footer>
+  </body>
+  </html>
