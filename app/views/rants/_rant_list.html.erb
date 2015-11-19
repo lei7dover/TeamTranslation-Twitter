@@ -1,0 +1,8 @@
+<% @rants.each do |rant| %>
+  <br><br><p><a href="<%= user_path rant.user %>"><%= rant.user.name %></a>
+  @<%= rant.user.username %></p>
+  <p><%= rant.content %></p>
+  <span>Posted <%= time_ago_in_words(rant.created_at) %> ago</span>
+  <span><%= rant.user.followers.count %>   Followers</span>
+  <span><%= rant.user.followeds.count %>   Following</span>
+  <% end %>

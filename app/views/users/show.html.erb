@@ -20,18 +20,20 @@
       <p><a href="<%= user_path rant.user %>"><%= rant.user.name %></a> @ <%=rant.user.username%>   Posted <%= time_ago_in_words(rant.created_at) %> ago</p>
       <p><%= rant.content %></p>
       <p><%= rant.user.follower_relationships.count %> Followers  <%= rant.user.followed_relationships.count %> Following</p><br>
+      <div class = 'follow_button'>
         <% if current_user && @user != current_user %>
           <% if current_user.following? @user %>
-            <%= form_tag relationship_path(current_user.relate(@user)), method: :delete do %>
+            <%= form_tag relationship_path(current_user.relate(@user)), method: :delete, remote: true do %>
               <%= submit_tag "Unfollow" %>
               <% end %>
             <% else %>
-            <%= form_for @relationship do %>
+            <%= form_for @relationship, remote: true do %>
               <%= hidden_field_tag :followed_id, @user.id %>
               <%= submit_tag "Follow" %>
               <% end %>
             <% end %>
         <% end %>
+      </div>
       <% end %>
       <br>
   </div>

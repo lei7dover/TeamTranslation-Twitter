@@ -1,5 +1,5 @@
 <p>
-<%= bootstrap_form_for @rant do |f|%>
+<%= bootstrap_form_for @rant, remote: true do |f|%>
   <%= f.text_area :content, skip_label:true, :size => "100x5"%>
   <%= f.submit "Rant!" %>
 <% end %>

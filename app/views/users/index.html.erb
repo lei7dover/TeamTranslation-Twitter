@@ -1,7 +1,7 @@
 <% if current_user %>
   <div class="panel left">
     <h1>Rant your Rage</h1>
-      <%= bootstrap_form_for @rant do |f|%>
+      <%= bootstrap_form_for @rant, remote: true do |f|%>
     <div class="control-group">
       <%= f.text_area :content, skip_label:true, :size => "100x5", :placeholder => "Rant away..." %>
       <%= f.submit "Rant!", method: :post %>

@@ -10,7 +10,6 @@ class RantsController < ApplicationController
     end
     @rant = Rant.new
     @users=User.all
-
   end
 
   def show
@@ -25,7 +24,10 @@ class RantsController < ApplicationController
     @rant = Rant.new(rant_params)
     @rant.user= current_user
     if @rant.save
-        redirect_to users_path
+      respond_to do |format|
+        format.html {redirect_to users_path}
+        format.js { render :template => 'rants/create'}
+      end
     else
       flash[:alert]= "There has been a problem saving your rant! Sorry."
       render :new
