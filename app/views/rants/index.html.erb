@@ -5,7 +5,7 @@
     <div class = "rant_form">
       <%= bootstrap_form_for @rant, remote: true do |f|%>
     <div class="control-group">
-      <%= f.text_area :content, skips_label:true, :size => "100x5", :placeholder => "Rant away..." %>
+      <%= f.text_area :content, skip_label:true, :size => "100x5", :placeholder => "Rant away..." %>
       <%= f.submit "Rant!", method: :post %>
     </div>
       <% end %>
@@ -22,7 +22,6 @@
   <span><%= rant.user.followeds.count %>   Following</span>
   <br>
   <br>
-</div>
   <% if current_user && rant.user != current_user %>
     <% if current_user.following? rant.user %>
       <%= form_tag relationship_path(current_user.relate(rant.user)), method: :delete do %>
@@ -36,6 +35,7 @@
     <% end %>
   <% end %>
 <% end %>
+</div>
 <br>
 
 <%= paginate @rants %>

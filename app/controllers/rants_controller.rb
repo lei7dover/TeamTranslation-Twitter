@@ -26,7 +26,7 @@ class RantsController < ApplicationController
     if @rant.save
       respond_to do |format|
         format.html {redirect_to users_path}
-        format.js { render :template => 'rants/create'}
+        format.js {@rants =[@rant] }
       end
     else
       flash[:alert]= "There has been a problem saving your rant! Sorry."
